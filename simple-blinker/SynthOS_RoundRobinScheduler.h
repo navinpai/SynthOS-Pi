@@ -1,0 +1,6 @@
+#ifndef SYNTHOS_ROUNDROBINSCHEDULER_INCLUDED
+#define SYNTHOS_ROUNDROBINSCHEDULER_INCLUDED
+
+#include "SynthOS_Scheduler.h"
+
+#endif

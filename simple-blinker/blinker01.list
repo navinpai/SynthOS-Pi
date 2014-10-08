@@ -1,0 +1,307 @@
+
+blinker01.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00008000 <main>:
+    8000:	e92d4008 	push	{r3, lr}
+    8004:	eb00008b 	bl	8238 <SynthOS_init>
+    8008:	e59f001c 	ldr	r0, [pc, #28]	; 802c <main+0x2c>
+    800c:	e59f101c 	ldr	r1, [pc, #28]	; 8030 <main+0x30>
+    8010:	e3a02000 	mov	r2, #0
+    8014:	e3a03001 	mov	r3, #1
+    8018:	eb000073 	bl	81ec <SynthOS_createLoopTask>
+    801c:	eb00003c 	bl	8114 <SynthOS_schedule>
+    8020:	e3a00000 	mov	r0, #0
+    8024:	e8bd4008 	pop	{r3, lr}
+    8028:	e12fff1e 	bx	lr
+    802c:	00010324 	andeq	r0, r1, r4, lsr #6
+    8030:	0000824c 	andeq	r8, r0, ip, asr #4
+
+00008034 <SynthOS_listInit>:
+    8034:	e5800000 	str	r0, [r0]
+    8038:	e5800004 	str	r0, [r0, #4]
+    803c:	e12fff1e 	bx	lr
+
+00008040 <SynthOS_listAppend>:
+    8040:	e5903004 	ldr	r3, [r0, #4]
+    8044:	e5813004 	str	r3, [r1, #4]
+    8048:	e5903004 	ldr	r3, [r0, #4]
+    804c:	e5810000 	str	r0, [r1]
+    8050:	e5801004 	str	r1, [r0, #4]
+    8054:	e5831000 	str	r1, [r3]
+    8058:	e12fff1e 	bx	lr
+
+0000805c <SynthOS_listInsertBefore>:
+    805c:	e5903004 	ldr	r3, [r0, #4]
+    8060:	e5813004 	str	r3, [r1, #4]
+    8064:	e5903004 	ldr	r3, [r0, #4]
+    8068:	e5810000 	str	r0, [r1]
+    806c:	e5801004 	str	r1, [r0, #4]
+    8070:	e5831000 	str	r1, [r3]
+    8074:	e12fff1e 	bx	lr
+
+00008078 <SynthOS_listRemoveFirst>:
+    8078:	e5903000 	ldr	r3, [r0]
+    807c:	e1530000 	cmp	r3, r0
+    8080:	18930006 	ldmne	r3, {r1, r2}
+    8084:	15821000 	strne	r1, [r2]
+    8088:	15931000 	ldrne	r1, [r3]
+    808c:	03a03000 	moveq	r3, #0
+    8090:	15812004 	strne	r2, [r1, #4]
+    8094:	15833000 	strne	r3, [r3]
+    8098:	15833004 	strne	r3, [r3, #4]
+    809c:	e1a00003 	mov	r0, r3
+    80a0:	e12fff1e 	bx	lr
+
+000080a4 <SynthOS_listRemove>:
+    80a4:	e890000c 	ldm	r0, {r2, r3}
+    80a8:	e5832000 	str	r2, [r3]
+    80ac:	e5902000 	ldr	r2, [r0]
+    80b0:	e5800000 	str	r0, [r0]
+    80b4:	e5823004 	str	r3, [r2, #4]
+    80b8:	e5800004 	str	r0, [r0, #4]
+    80bc:	e12fff1e 	bx	lr
+
+000080c0 <SynthOS_listIsEmpty>:
+    80c0:	e5903000 	ldr	r3, [r0]
+    80c4:	e0533000 	subs	r3, r3, r0
+    80c8:	e2730000 	rsbs	r0, r3, #0
+    80cc:	e0b00003 	adcs	r0, r0, r3
+    80d0:	e12fff1e 	bx	lr
+
+000080d4 <SynthOS_nullLock>:
+    80d4:	e3a00000 	mov	r0, #0
+    80d8:	e12fff1e 	bx	lr
+
+000080dc <SynthOS_nullUnlock>:
+    80dc:	e12fff1e 	bx	lr
+
+000080e0 <SynthOS_nullEnableInterrupts>:
+    80e0:	e12fff1e 	bx	lr
+
+000080e4 <SynthOS_initScheduler>:
+    80e4:	e92d4010 	push	{r4, lr}
+    80e8:	e59f401c 	ldr	r4, [pc, #28]	; 810c <SynthOS_initScheduler+0x28>
+    80ec:	e1a00004 	mov	r0, r4
+    80f0:	ebffffcf 	bl	8034 <SynthOS_listInit>
+    80f4:	e59f2014 	ldr	r2, [pc, #20]	; 8110 <SynthOS_initScheduler+0x2c>
+    80f8:	e3a03000 	mov	r3, #0
+    80fc:	e5843008 	str	r3, [r4, #8]
+    8100:	e5c23000 	strb	r3, [r2]
+    8104:	e8bd4010 	pop	{r4, lr}
+    8108:	e12fff1e 	bx	lr
+    810c:	00010310 	andeq	r0, r1, r0, lsl r3
+    8110:	00010320 	andeq	r0, r1, r0, lsr #6
+
+00008114 <SynthOS_schedule>:
+    8114:	e92d4070 	push	{r4, r5, r6, lr}
+    8118:	e59f608c 	ldr	r6, [pc, #140]	; 81ac <SynthOS_schedule+0x98>
+    811c:	e59f408c 	ldr	r4, [pc, #140]	; 81b0 <SynthOS_schedule+0x9c>
+    8120:	ea000009 	b	814c <SynthOS_schedule+0x38>
+    8124:	ebffffea 	bl	80d4 <SynthOS_nullLock>
+    8128:	e1a05000 	mov	r5, r0
+    812c:	e59f007c 	ldr	r0, [pc, #124]	; 81b0 <SynthOS_schedule+0x9c>
+    8130:	ebffffd0 	bl	8078 <SynthOS_listRemoveFirst>
+    8134:	e5840008 	str	r0, [r4, #8]
+    8138:	e1a00005 	mov	r0, r5
+    813c:	ebffffe6 	bl	80dc <SynthOS_nullUnlock>
+    8140:	e5943008 	ldr	r3, [r4, #8]
+    8144:	e3530000 	cmp	r3, #0
+    8148:	1a000004 	bne	8160 <SynthOS_schedule+0x4c>
+    814c:	e5d63000 	ldrb	r3, [r6]
+    8150:	e3530000 	cmp	r3, #0
+    8154:	0afffff2 	beq	8124 <SynthOS_schedule+0x10>
+    8158:	e8bd4070 	pop	{r4, r5, r6, lr}
+    815c:	e12fff1e 	bx	lr
+    8160:	e5d3200c 	ldrb	r2, [r3, #12]
+    8164:	e2422001 	sub	r2, r2, #1
+    8168:	e20220ff 	and	r2, r2, #255	; 0xff
+    816c:	e3520000 	cmp	r2, #0
+    8170:	e5c3200c 	strb	r2, [r3, #12]
+    8174:	1a000004 	bne	818c <SynthOS_schedule+0x78>
+    8178:	e1a00003 	mov	r0, r3
+    817c:	e593c008 	ldr	ip, [r3, #8]
+    8180:	e1a0e00f 	mov	lr, pc
+    8184:	e12fff1c 	bx	ip
+    8188:	eaffffef 	b	814c <SynthOS_schedule+0x38>
+    818c:	ebffffd0 	bl	80d4 <SynthOS_nullLock>
+    8190:	e5941008 	ldr	r1, [r4, #8]
+    8194:	e1a05000 	mov	r5, r0
+    8198:	e59f0010 	ldr	r0, [pc, #16]	; 81b0 <SynthOS_schedule+0x9c>
+    819c:	ebffffa7 	bl	8040 <SynthOS_listAppend>
+    81a0:	e1a00005 	mov	r0, r5
+    81a4:	ebffffcc 	bl	80dc <SynthOS_nullUnlock>
+    81a8:	eaffffe7 	b	814c <SynthOS_schedule+0x38>
+    81ac:	00010320 	andeq	r0, r1, r0, lsr #6
+    81b0:	00010310 	andeq	r0, r1, r0, lsl r3
+
+000081b4 <SynthOS_scheduleTask>:
+    81b4:	e92d4038 	push	{r3, r4, r5, lr}
+    81b8:	e1a04000 	mov	r4, r0
+    81bc:	ebffffc4 	bl	80d4 <SynthOS_nullLock>
+    81c0:	e5d4300d 	ldrb	r3, [r4, #13]
+    81c4:	e1a05000 	mov	r5, r0
+    81c8:	e5c4300c 	strb	r3, [r4, #12]
+    81cc:	e59f0014 	ldr	r0, [pc, #20]	; 81e8 <SynthOS_scheduleTask+0x34>
+    81d0:	e1a01004 	mov	r1, r4
+    81d4:	ebffff99 	bl	8040 <SynthOS_listAppend>
+    81d8:	e1a00005 	mov	r0, r5
+    81dc:	ebffffbe 	bl	80dc <SynthOS_nullUnlock>
+    81e0:	e8bd4038 	pop	{r3, r4, r5, lr}
+    81e4:	e12fff1e 	bx	lr
+    81e8:	00010310 	andeq	r0, r1, r0, lsl r3
+
+000081ec <SynthOS_createLoopTask>:
+    81ec:	e92d4010 	push	{r4, lr}
+    81f0:	e1a04000 	mov	r4, r0
+    81f4:	eb000007 	bl	8218 <SynthOS_tcbInit>
+    81f8:	e1a00004 	mov	r0, r4
+    81fc:	ebffffec 	bl	81b4 <SynthOS_scheduleTask>
+    8200:	e8bd4010 	pop	{r4, lr}
+    8204:	e12fff1e 	bx	lr
+
+00008208 <SynthOS_createCallTask>:
+    8208:	e92d4008 	push	{r3, lr}
+    820c:	eb000001 	bl	8218 <SynthOS_tcbInit>
+    8210:	e8bd4008 	pop	{r3, lr}
+    8214:	e12fff1e 	bx	lr
+
+00008218 <SynthOS_tcbInit>:
+    8218:	e5c0300d 	strb	r3, [r0, #13]
+    821c:	e3a03000 	mov	r3, #0
+    8220:	e5801008 	str	r1, [r0, #8]
+    8224:	e5c0200c 	strb	r2, [r0, #12]
+    8228:	e1c030be 	strh	r3, [r0, #14]
+    822c:	e5800000 	str	r0, [r0]
+    8230:	e5800004 	str	r0, [r0, #4]
+    8234:	e12fff1e 	bx	lr
+
+00008238 <SynthOS_init>:
+    8238:	e92d4008 	push	{r3, lr}
+    823c:	ebffffa8 	bl	80e4 <SynthOS_initScheduler>
+    8240:	e8bd4008 	pop	{r3, lr}
+    8244:	e12fff1e 	bx	lr
+
+00008248 <SynthOS_panic>:
+    8248:	e12fff1e 	bx	lr
+
+0000824c <notmain>:
+    824c:	e92d4070 	push	{r4, r5, r6, lr}
+    8250:	e59f0084 	ldr	r0, [pc, #132]	; 82dc <notmain+0x90>
+    8254:	eb00002a 	bl	8304 <GET32>
+    8258:	e3c00707 	bic	r0, r0, #1835008	; 0x1c0000
+    825c:	e3803701 	orr	r3, r0, #262144	; 0x40000
+    8260:	e59f4078 	ldr	r4, [pc, #120]	; 82e0 <notmain+0x94>
+    8264:	e59f0070 	ldr	r0, [pc, #112]	; 82dc <notmain+0x90>
+    8268:	e1a01003 	mov	r1, r3
+    826c:	e5843000 	str	r3, [r4]
+    8270:	eb000021 	bl	82fc <PUT32>
+    8274:	e59f5068 	ldr	r5, [pc, #104]	; 82e4 <notmain+0x98>
+    8278:	e3a06000 	mov	r6, #0
+    827c:	e59f0064 	ldr	r0, [pc, #100]	; 82e8 <notmain+0x9c>
+    8280:	e3a01801 	mov	r1, #65536	; 0x10000
+    8284:	eb00001c 	bl	82fc <PUT32>
+    8288:	e5846000 	str	r6, [r4]
+    828c:	e3a00000 	mov	r0, #0
+    8290:	eb00001d 	bl	830c <dummy>
+    8294:	e5940000 	ldr	r0, [r4]
+    8298:	e2800001 	add	r0, r0, #1
+    829c:	e1500005 	cmp	r0, r5
+    82a0:	e5840000 	str	r0, [r4]
+    82a4:	9afffff9 	bls	8290 <notmain+0x44>
+    82a8:	e59f003c 	ldr	r0, [pc, #60]	; 82ec <notmain+0xa0>
+    82ac:	e3a01801 	mov	r1, #65536	; 0x10000
+    82b0:	eb000011 	bl	82fc <PUT32>
+    82b4:	e59f3024 	ldr	r3, [pc, #36]	; 82e0 <notmain+0x94>
+    82b8:	e5836000 	str	r6, [r3]
+    82bc:	e3a00000 	mov	r0, #0
+    82c0:	eb000011 	bl	830c <dummy>
+    82c4:	e5940000 	ldr	r0, [r4]
+    82c8:	e2800001 	add	r0, r0, #1
+    82cc:	e1500005 	cmp	r0, r5
+    82d0:	e5840000 	str	r0, [r4]
+    82d4:	9afffff9 	bls	82c0 <notmain+0x74>
+    82d8:	eaffffe7 	b	827c <notmain+0x30>
+    82dc:	20200004 	eorcs	r0, r0, r4
+    82e0:	0001031c 	andeq	r0, r1, ip, lsl r3
+    82e4:	000fffff 	strdeq	pc, [pc], -pc	; <UNPREDICTABLE>
+    82e8:	2020001c 	eorcs	r0, r0, ip, lsl r0
+    82ec:	20200028 	eorcs	r0, r0, r8, lsr #32
+
+000082f0 <_start>:
+    82f0:	e3a0d902 	mov	sp, #32768	; 0x8000
+    82f4:	ebffff41 	bl	8000 <main>
+    82f8:	eafffffe 	b	82f8 <_start+0x8>
+
+000082fc <PUT32>:
+    82fc:	e5801000 	str	r1, [r0]
+    8300:	e12fff1e 	bx	lr
+
+00008304 <GET32>:
+    8304:	e5900000 	ldr	r0, [r0]
+    8308:	e12fff1e 	bx	lr
+
+0000830c <dummy>:
+    830c:	e12fff1e 	bx	lr
+
+Disassembly of section .bss:
+
+00008310 <SynthOS_abort-0x10>:
+	...
+
+00008320 <SynthOS_abort>:
+    8320:	00000000 	andeq	r0, r0, r0
+
+00008324 <SynthOS_tcb_notmain>:
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	3a434347 	bcc	10d0d24 <_stack+0x1050d24>
+   4:	4e472820 	cdpmi	8, 4, cr2, cr7, cr0, {1}
+   8:	6f542055 	svcvs	0x00542055
+   c:	20736c6f 	rsbscs	r6, r3, pc, ror #24
+  10:	20726f66 	rsbscs	r6, r2, r6, ror #30
+  14:	204d5241 	subcs	r5, sp, r1, asr #4
+  18:	65626d45 	strbvs	r6, [r2, #-3397]!	; 0xd45
+  1c:	64656464 	strbtvs	r6, [r5], #-1124	; 0x464
+  20:	6f725020 	svcvs	0x00725020
+  24:	73736563 	cmnvc	r3, #415236096	; 0x18c00000
+  28:	2973726f 	ldmdbcs	r3!, {r0, r1, r2, r3, r5, r6, r9, ip, sp, lr}^
+  2c:	372e3420 	strcc	r3, [lr, -r0, lsr #8]!
+  30:	3220342e 	eorcc	r3, r0, #771751936	; 0x2e000000
+  34:	30343130 	eorscc	r3, r4, r0, lsr r1
+  38:	20313034 	eorscs	r3, r1, r4, lsr r0
+  3c:	6c657228 	sfmvs	f7, 2, [r5], #-160	; 0xffffff60
+  40:	65736165 	ldrbvs	r6, [r3, #-357]!	; 0x165
+  44:	415b2029 	cmpmi	fp, r9, lsr #32
+  48:	652f4d52 	strvs	r4, [pc, #-3410]!	; fffff2fe <_stack+0xfff7f2fe>
+  4c:	6465626d 	strbtvs	r6, [r5], #-621	; 0x26d
+  50:	2d646564 	cfstr64cs	mvdx6, [r4, #-400]!	; 0xfffffe70
+  54:	2d375f34 	ldccs	15, cr5, [r7, #-208]!	; 0xffffff30
+  58:	6e617262 	cdpvs	2, 6, cr7, cr1, cr2, {3}
+  5c:	72206863 	eorvc	r6, r0, #6488064	; 0x630000
+  60:	73697665 	cmnvc	r9, #105906176	; 0x6500000
+  64:	206e6f69 	rsbcs	r6, lr, r9, ror #30
+  68:	31393032 	teqcc	r9, r2, lsr r0
+  6c:	005d3539 	subseq	r3, sp, r9, lsr r5
+
+Disassembly of section .ARM.attributes:
+
+00000000 <_stack-0x80000>:
+   0:	00002d41 	andeq	r2, r0, r1, asr #26
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000023 	andeq	r0, r0, r3, lsr #32
+  10:	4d524105 	ldfmie	f4, [r2, #-20]	; 0xffffffec
+  14:	4d445437 	cfstrdmi	mvd5, [r4, #-220]	; 0xffffff24
+  18:	02060049 	andeq	r0, r6, #73	; 0x49
+  1c:	01090108 	tsteq	r9, r8, lsl #2
+  20:	01140412 	tsteq	r4, r2, lsl r4
+  24:	03170115 	tsteq	r7, #1073741829	; 0x40000005
+  28:	011a0118 	tsteq	sl, r8, lsl r1
+  2c:	Address 0x0000002c is out of bounds.
+
